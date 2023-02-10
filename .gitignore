@@ -1,0 +1,5 @@
+*.sketch
+*.xd
+*.fig
+config.js
+.DS_Store

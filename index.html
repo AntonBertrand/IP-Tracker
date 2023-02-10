@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <title>IP Address Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main>
+
+ <div class="hero">
+  <h1>IP Address Tracker</h1>
+    <div class="search-bar">
+      <form action="" onsubmit="return false;">
+          <input class="input" type="text" placeholder="Search for any IP address or domain">
+          <button class="submit"><img src="images/icon-arrow.svg" alt=""></button>
+      </form>
+    </div>
+
+    <div class="information">
+      <div class="ip-address">
+          <h3>IP Address</h3>
+          <p id="ipAddress">192.212.174.101</p>
+      </div>
+  
+      <div class="divider"></div>
+  
+      <div class="location">
+        <h3>Location</h3>
+        <p id="location">Brooklyn, NY 10001</p>
+      </div>
+  
+      <div class="divider"></div>
+  
+      <div class="timezone">
+        <h3>Timezone</h3>
+        <p id="timeZone">UTC-05:00</p>
+      </div>
+  
+      <div class="divider"></div>
+  
+  
+      <div class="isp">
+        <h3>ISP</h3>
+        <p id="isp">SpaceX Starlink</p>
+      </div>
+   </div>
+  
+
+ </div>
+
+ 
+ <div class="map-container">
+    <div id="map">
+
+    </div>
+ </div>
+  
+</main>
+
+
+<script src="config.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
