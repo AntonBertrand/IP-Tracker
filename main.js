@@ -4,28 +4,31 @@ const userLocation = document.getElementById("location");
 const userTimeZone = document.getElementById("timeZone");
 const userIsp = document.getElementById("isp");
 const submitBtn = document.querySelector(".submit");
+let latLon;
+let map;
 
 getDetails();
 
 
-var script = document.createElement('script');
-script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`;
-script.async = true;
-
-
-document.head.appendChild(script);
-
-let map;
 
 function initMap() {
-  map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: -34.397, lng: 150.644 },
+
+  let lat = Number(latLon[1]);
+  let lon = Number(latLon[0]);
+
+  const myLatLng = { lat: lat, lng: lon};
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 4,
     disableDefaultUI: true,
-    zoom: 8,
+    center: myLatLng,
+  });
+
+  new google.maps.Marker({
+    position: myLatLng,
+    map,
+    title: "Hello World!",
   });
 }
-
-window.initMap = initMap;
 
 submitBtn.addEventListener("click", getDetails);
 
@@ -34,8 +37,6 @@ async function getDetails() {
     let input = document.querySelector(".input").value;
 
     let response;
-
-    console.log("Input is " + input);
 
     if (input.length > 3) {
         response = await fetch(`https://geo.ipify.org/api/v2/country?apiKey=at_4pIwPZXGXutj4zQAE9GvFA7Lk72UM&ipAddress=${input}`);
@@ -46,12 +47,30 @@ async function getDetails() {
 
    let data = await response.json();
 
-    console.log(data);
-
-    
-
     userIpAddress.innerHTML = data.ip;
     userLocation.innerHTML = `${data.location.region}, ${data.location.country}`
     userTimeZone.innerHTML = data.location.timezone;
     userIsp.innerHTML = data.isp; 
+
+    latLon = await getLatLon(data.location.region);
+
+    var script = document.createElement('script');
+    document.head.appendChild(script);
+ 
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`;
+    script.async = true;
+    
+    window.initMap = initMap;
+
+}
+
+async function getLatLon(location) {
+  let response = await fetch(`https://geocode.maps.co/search?q=${location}`);
+  let data = await response.json();
+  return [data[0].lon, data[0].lat];
+}
+
+function changeMarkerPosition(marker) {
+  var latlng = new google.maps.LatLng(40.748774, -73.985763);
+  marker.setPosition(latlng);
 }
